@@ -1,0 +1,40 @@
+<div
+  class="m-6 w-80 min-h-72 text-center p-6 rounded-lg shadow-xl shadow-gray-500 bg-gray-800 hover:mt-0 hover:w-96 hover:min-h-80 border-2 transition-all duration-200 ease-out"
+  [ngClass]="{
+    'border-gray-600': TaskState === 'Default',
+    'border-green-600': TaskState === 'Done',
+    'border-red-600': TaskState === 'Expanded'
+  }"
+>
+  <div class="text-white -mt-5 text-right -mx-4 flex justify-end">
+    <a routerLink="{{ EditUrl }}"
+      ><svg
+        class="fill-current h-5 w-5"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <title>Edit</title>
+        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg
+    ></a>
+  </div>
+  <h5
+    class="my-3 text-2xl font-bold tracking-tight text-white"
+    [ngClass]="{ 'line-through': TaskState === 'Done' }"
+  >
+    {{ Task.title }}
+  </h5>
+  <p class="font-normal text-gray-400">
+    {{ Task.definition }}
+  </p>
+  <p
+    class="my-6 font-normal"
+    [ngClass]="TaskState === 'Expanded' ? 'text-red-400' : 'text-gray-400'"
+  >
+    {{ Task.date }}
+  </p>
+  <app-button
+    btn_text="{{ ButtonText }}"
+    btn_style="Dark"
+    (btnClick)="ClickTaskButton()"
+  ></app-button>
+</div>

@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.spacing-block-sm {
+  margin-bottom: 2rem;
+}
+
+.spacing-block-md {
+  margin-bottom: 5rem;
+}
+
+.spacing-block-lg {
+  margin-bottom: 10rem;
+}
+
+.spacing-block-xl {
+  margin-bottom: 18rem;
+}

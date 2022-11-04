@@ -1,0 +1,40 @@
+<div class="spacing-block-md"></div>
+<!-- space -->
+<div class="px-12 md:px-40">
+  <div *ngIf="Notes">
+    <div *ngFor="let note of Notes">
+      <app-notes-item
+        [Note]="note"
+        (SubmitEvent)="UptadeNote($event)"
+        (AbortEvent)="DeleteNote($event)"
+      ></app-notes-item>
+    </div>
+    <!-- create note -->
+    <div
+      *ngIf="!createNoteExpand; else elseCreateBlock"
+      (click)="clickCreateNoteExpand()"
+      class="flex flex-col justify-center text-center my-14 p-4 rounded-lg shadow-xl shadow-gray-500 bg-gray-800 hover:mt-10 hover:-mx-8 transition-all duration-200 ease-out"
+    >
+      <div class="text-6xl font-semibold text-gray-100 cursor-pointer">+</div>
+    </div>
+    <ng-template #elseCreateBlock>
+      <app-notes-item
+        [FormType]="'Create'"
+        (SubmitEvent)="CreateNote($event)"
+      ></app-notes-item>
+      <div
+        class="text-center -mt-6 bg-gray-800 border-t-2 border-gray-600 rounded-b-full p-1 mx-12 shadow-xl shadow-gray-500"
+      >
+        <app-button
+          btn_text="Close"
+          btn_style="Dark"
+          (btnClick)="clickCreateNoteExpand()"
+        ></app-button>
+      </div>
+    </ng-template>
+    <!-- create note -->
+  </div>
+</div>
+
+<!-- space -->
+<div class="spacing-block-md"></div>

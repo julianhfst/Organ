@@ -1,0 +1,21 @@
+<div class="spacing-block-md"></div>
+<!-- space -->
+
+<div *ngIf="Tasks" class="flex flex-wrap items-start justify-center">
+  <div *ngFor="let task of Tasks">
+    <app-task-item
+      [Task]="task"
+      (ClickToggleTask)="ToggleTask($event)"
+    ></app-task-item>
+  </div>
+  <div
+    class="flex flex-col justify-center text-center m-6 w-80 min-h-72 rounded-lg shadow-xl shadow-gray-500 bg-gray-800 cursor-pointer hover:mt-0 hover:w-96 hover:min-h-80 transition-all duration-200 ease-out"
+    routerLink="create"
+  >
+    <p class="text-8xl font-bold text-white">+</p>
+    <p class="mt-4 font-normal text-gray-400">Create Task</p>
+  </div>
+</div>
+
+<!-- space -->
+<div class="spacing-block-md"></div>

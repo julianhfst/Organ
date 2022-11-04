@@ -1,0 +1,137 @@
+<form
+  [formGroup]="taskForm"
+  class="max-w-lg w-11/12 rounded-md shadow-lg shadow-gray-500 p-4 bg-gray-800"
+>
+  <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <label
+        class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+        for="title"
+      >
+        Title
+      </label>
+      <input
+        formControlName="title"
+        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+        id="title"
+        type="text"
+        placeholder="Title"
+      />
+      <p
+        *ngIf="title?.invalid && title?.touched"
+        class="text-red-500 text-xs italic"
+      >
+        Please enter a Title!
+      </p>
+    </div>
+    <div class="w-full md:w-1/2 px-3">
+      <label
+        class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+        for="date"
+      >
+        Date
+      </label>
+      <input
+        formControlName="date"
+        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        id="date"
+        type="datetime-local"
+        placeholder="01-01-2022"
+      />
+      <p
+        *ngIf="date?.invalid && date?.touched"
+        class="text-red-500 text-xs italic"
+      >
+        Please enter a Date!
+      </p>
+    </div>
+  </div>
+  <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full px-3">
+      <label
+        class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+        for="definition"
+      >
+        Definition
+      </label>
+      <input
+        formControlName="definition"
+        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        id="definition"
+        type="text"
+        placeholder="definition"
+      />
+      <p
+        *ngIf="definition?.invalid && definition?.touched"
+        class="text-red-500 text-xs italic"
+      >
+        Please enter a Defintion!
+      </p>
+    </div>
+  </div>
+  <div class="flex flex-wrap -mx-3 mb-8">
+    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+      <label
+        class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+        for="state"
+      >
+        State
+      </label>
+      <div class="relative">
+        <select
+          formControlName="state"
+          class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          id="state"
+        >
+          <option>Not Done</option>
+          <option>Done</option>
+        </select>
+        <div
+          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+        >
+          <svg
+            class="fill-current h-4 w-4"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- if edit form -->
+  <div *ngIf="TaskFormType == 'Get'" class="flex flex-wrap -mx-3 mb-4">
+    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0 text-center">
+      <label
+        class="block tracking-wide text-white text-base font-bold mb-2"
+        for="grid-city"
+      >
+        Id: {{ Task?.id }}
+      </label>
+    </div>
+    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0 text-center">
+      <label
+        class="block tracking-wide text-white text-base font-bold mb-2"
+        for="grid-city"
+      >
+        Creation Date: {{ Task?.creationDate }}
+      </label>
+    </div>
+  </div>
+  <div class="flex space-x-8 justify-center">
+    <app-button
+      [disabled]="taskForm.invalid"
+      btn_text="{{ ButtonTexts.submit }}"
+      btn_style="Default"
+      (btnClick)="ClickSubmit()"
+    ></app-button>
+    <app-button
+      btn_text="{{ ButtonTexts.abort }}"
+      btn_style="DefaultRed"
+      (btnClick)="Abortevent.emit()"
+    ></app-button>
+  </div>
+</form>

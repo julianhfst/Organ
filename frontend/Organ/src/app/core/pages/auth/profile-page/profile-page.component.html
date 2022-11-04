@@ -1,0 +1,19 @@
+<div *ngIf="user" class="w-full items-center flex flex-col">
+  <div
+    class="mt-20 sm:w-96 w-64 h-80 text-center p-6 rounded-lg shadow-xl shadow-gray-500 bg-gray-800 flex flex-col"
+  >
+    <h5 class="mb-4 text-2xl font-bold tracking-tight text-white">Profile</h5>
+    <p class="font-normal text-gray-400">Username: {{ user.username }}</p>
+    <p class="font-normal text-gray-400">Email: {{ user.email }}</p>
+    <p class="font-normal text-gray-400">
+      Creation Date: {{ user.creationDate }}
+    </p>
+    <div class="w-full h-10 mt-auto mb-4">
+      <app-button
+        btn_text="Logout"
+        btn_style="Dark"
+        (btnClick)="logout()"
+      ></app-button>
+    </div>
+  </div>
+</div>

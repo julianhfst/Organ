@@ -1,0 +1,27 @@
+$prime: #FF6E48
+
+:host
+    width: 100%
+    position: absolute
+    top: 0
+    left: 0
+    height: 100%
+    z-index: 9999
+    // background: $prime
+    display: flex
+    justify-content: center
+    align-items: center
+
+    div.loading-spinner
+        width: 10rem
+        height:10rem
+        border-radius: 50%
+        border: 0.5rem solid rgba(30, 41, 59, 0.2)
+        border-bottom: 0.5rem solid rgba(30, 41, 59, 1)
+        animation: spinner 1s infinite ease-in-out
+
+@keyframes spinner
+    0%
+        transform: rotate(0deg)
+    100%
+        transform: rotate(360deg)

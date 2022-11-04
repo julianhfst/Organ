@@ -1,0 +1,188 @@
+<div class="mt-12">
+  <div *ngIf="Board; else NoBoard">
+    <div class="flex justify-center p-4">
+      <div
+        class="w-full p-6 flex flex-col md:flex-row bg-white text-lg text-gray-800 rounded-xl shadow-lg border gap-4 items-center"
+      >
+        <div class="font-semibold mr-2 text-center">
+          {{ Board.title }}
+        </div>
+        <div class="text-center lg:whitespace-nowrap">
+          created: {{ Board.creationDate }}
+        </div>
+        <div class="grow text-center lg:text-right text-base">
+          <app-button
+            btn_text="Delete Board"
+            btn_style="DefaultRed"
+            (btnClick)="clickDeleteBoard()"
+          ></app-button>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col lg:flex-row">
+      <div class="lg:w-1/4 p-4">
+        <div
+          class="w-full min-h-16 rounded-x-xl rounded-t-xl shadow-xl border shadow-gray-400 bg-gray-50 flex flex-col justify-center"
+        >
+          <span class="text-center font-semibold">To Do</span>
+        </div>
+        <div
+          cdkDropList
+          #ToDoList="cdkDropList"
+          [cdkDropListData]="Board.jobs | jobfilter: jobStatus.ToDo"
+          [cdkDropListConnectedTo]="[InWorkList, InReviewList, FinishedList]"
+          (cdkDropListDropped)="drop($event, jobStatus.ToDo)"
+          class="flex flex-col w-full min-h-96 p-4 rounded-b-xl rounded-x-xl shadow-lg shadow-gray-400 bg-white"
+        >
+          <!-- items -->
+          <div
+            *ngFor="let job of Board.jobs | jobfilter: jobStatus.ToDo"
+            cdkDrag
+            [cdkDragData]="job"
+          >
+            <app-job-item
+              [Job]="job"
+              (DeleteJobEvent)="DeleteJobEvent.emit($event)"
+            ></app-job-item>
+          </div>
+          <!-- items end -->
+          <!-- create job -->
+          <div class="p-4 my-2 rounded-xl border bg-gray-100 text-center">
+            <div
+              class="font-semibold text-lg cursor-pointer"
+              (click)="clickExpand()"
+            >
+              Click to create Job
+            </div>
+            <div *ngIf="newJobExpanded" class="mt-6">
+              <input
+                [formControl]="newJobInput"
+                type="text"
+                placeholder="Definition"
+                class="bg-transparent text-center outline-0 mb-4"
+              />
+              <app-button
+                [disabled]="newJobInput.invalid"
+                btn_text="Create Job"
+                btn_style="Outline"
+                (btnClick)="clickCreateJob()"
+              ></app-button>
+            </div>
+          </div>
+          <!-- create job end -->
+        </div>
+      </div>
+      <div class="lg:w-1/4 p-4">
+        <div
+          class="w-full min-h-16 rounded-x-xl rounded-t-xl shadow-xl border shadow-gray-400 bg-gray-50 flex flex-col justify-center"
+        >
+          <span class="text-center font-semibold">In Work</span>
+        </div>
+        <div
+          cdkDropList
+          #InWorkList="cdkDropList"
+          [cdkDropListData]="Board.jobs | jobfilter: jobStatus.InWork"
+          [cdkDropListConnectedTo]="[ToDoList, InReviewList, FinishedList]"
+          (cdkDropListDropped)="drop($event, jobStatus.InWork)"
+          class="flex flex-col w-full min-h-96 p-4 rounded-b-xl rounded-x-xl shadow-lg shadow-gray-400 bg-white"
+        >
+          <!-- items -->
+          <div
+            *ngFor="let job of Board.jobs | jobfilter: jobStatus.InWork"
+            cdkDrag
+            [cdkDragData]="job"
+          >
+            <app-job-item
+              [Job]="job"
+              (DeleteJobEvent)="DeleteJobEvent.emit($event)"
+            ></app-job-item>
+          </div>
+        </div>
+      </div>
+      <div class="lg:w-1/4 p-4">
+        <div
+          class="w-full min-h-16 rounded-x-xl rounded-t-xl shadow-xl border shadow-gray-400 bg-gray-50 flex flex-col justify-center"
+        >
+          <span class="text-center font-semibold">In Review</span>
+        </div>
+        <div
+          cdkDropList
+          #InReviewList="cdkDropList"
+          [cdkDropListData]="Board.jobs | jobfilter: jobStatus.InReview"
+          [cdkDropListConnectedTo]="[ToDoList, InWorkList, FinishedList]"
+          (cdkDropListDropped)="drop($event, jobStatus.InReview)"
+          class="flex flex-col w-full min-h-96 p-4 rounded-b-xl rounded-x-xl shadow-lg shadow-gray-400 bg-white"
+        >
+          <!-- items -->
+          <div
+            *ngFor="let job of Board.jobs | jobfilter: jobStatus.InReview"
+            cdkDrag
+            [cdkDragData]="job"
+          >
+            <app-job-item
+              [Job]="job"
+              (DeleteJobEvent)="DeleteJobEvent.emit($event)"
+            ></app-job-item>
+          </div>
+        </div>
+      </div>
+      <div class="lg:w-1/4 p-4">
+        <div
+          class="w-full min-h-16 rounded-x-xl rounded-t-xl shadow-xl border shadow-gray-400 bg-gray-50 flex flex-col justify-center"
+        >
+          <span class="text-center font-semibold">Finished</span>
+        </div>
+        <div
+          cdkDropList
+          #FinishedList="cdkDropList"
+          [cdkDropListData]="Board.jobs | jobfilter: jobStatus.Finished"
+          [cdkDropListConnectedTo]="[ToDoList, InWorkList, InReviewList]"
+          (cdkDropListDropped)="drop($event, jobStatus.Finished)"
+          class="flex flex-col w-full min-h-96 p-4 rounded-b-xl rounded-x-xl shadow-lg shadow-gray-400 bg-white"
+        >
+          <!-- items -->
+          <div
+            *ngFor="let job of Board.jobs | jobfilter: jobStatus.Finished"
+            cdkDrag
+            [cdkDragData]="job"
+          >
+            <app-job-item
+              [Job]="job"
+              (DeleteJobEvent)="DeleteJobEvent.emit($event)"
+            ></app-job-item>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #NoBoard
+    ><div class="flex justify-center">
+      <div class="w-full lg:w-1/3 p-4">
+        <div
+          class="w-full min-h-16 rounded-x-xl rounded-t-xl shadow-xl border shadow-gray-400 bg-gray-50 flex flex-col justify-center"
+        >
+          <span class="text-center font-semibold">Create new Board</span>
+        </div>
+        <div
+          class="flex flex-col w-full min-h-96 p-4 rounded-b-xl rounded-x-xl shadow-lg shadow-gray-400 bg-white"
+        >
+          <div class="w-full p-4 my-2 rounded-xl border bg-gray-100">
+            <input
+              [formControl]="boardTitleInput"
+              type="text"
+              placeholder="Title"
+              class="bg-transparent text-center w-full outline-0"
+            />
+          </div>
+          <div class="mt-3 text-center">
+            <app-button
+              [disabled]="boardTitleInput.invalid"
+              btn_text="Create Board"
+              btn_style="ColoredShadow"
+              (btnClick)="clickCreateBoard()"
+            ></app-button>
+          </div>
+        </div>
+      </div></div
+  ></ng-template>
+</div>
